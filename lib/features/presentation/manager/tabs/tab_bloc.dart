@@ -12,6 +12,7 @@ import 'package:injectable/injectable.dart';
 @injectable
 class TabBloc extends Bloc<TabsEvent, TabsState> {
   int indexScreen = 0;
+  String title = "Home";
   List<Data>? allCategories;
   TextEditingController searchController = TextEditingController();
 
@@ -23,6 +24,16 @@ class TabBloc extends Bloc<TabsEvent, TabsState> {
   }
 
   void changeScreen(int val) {
+    if (val == 0) {
+      title = "Home";
+    } else if (val == 1) {
+      title = "Category";
+    } else if (val == 2) {
+      title = "Favorite";
+    } else if (val == 3) {
+      title = "Account";
+    }
+
     add(OnTabEvent(index: val));
   }
 

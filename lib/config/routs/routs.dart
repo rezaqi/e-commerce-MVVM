@@ -1,5 +1,6 @@
 import 'package:e_commerce/features/auth/login/presentation/page/login.dart';
 import 'package:e_commerce/features/auth/sign_up/presentation/pages/signup.dart';
+import 'package:e_commerce/features/presentation/pages/cart.dart';
 import 'package:e_commerce/features/presentation/pages/item.dart';
 import 'package:e_commerce/features/undeine_page.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class Routes {
   static const String home = '/home';
   static const String products = '/products';
   static const String item = '/item';
+  static const String cart = '/cart';
 }
 
 class AppRoutes {
@@ -26,6 +28,8 @@ class AppRoutes {
       case Routes.item:
         return MaterialPageRoute(
             builder: (_) => Item(id: routsSettings.arguments as String ?? ""));
+      case Routes.cart:
+        return MaterialPageRoute(builder: (_) => Cart());
       default:
         return MaterialPageRoute(builder: (_) => const UndefinePage());
     }

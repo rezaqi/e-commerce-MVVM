@@ -1,19 +1,15 @@
-import 'package:e_commerce/core/class/uitls/color/app_colors.dart';
 import 'package:e_commerce/core/class/uitls/text_styles.dart';
+import 'package:e_commerce/features/presentation/manager/item/bloc.dart';
 import 'package:e_commerce/features/presentation/manager/item/state.dart';
+import 'package:e_commerce/features/presentation/widget/item/cutom_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SoldRatingCount extends StatefulWidget {
+class SoldRatingCount extends StatelessWidget {
   final StateItem state;
-  const SoldRatingCount({super.key, required this.state});
+  final BlocItem bloc;
+  const SoldRatingCount({super.key, required this.state, required this.bloc});
 
-  @override
-  State<SoldRatingCount> createState() => _SoldRatingCountState();
-}
-
-class _SoldRatingCountState extends State<SoldRatingCount> {
-  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,7 +21,7 @@ class _SoldRatingCountState extends State<SoldRatingCount> {
               border: Border.all(width: 1),
               borderRadius: BorderRadius.circular(20)),
           child: Text(
-            "${widget.state.model?.data?.sold} sold",
+            "${state.model?.data?.sold} sold",
             style: poppins18W500(),
           ),
         ),
@@ -36,7 +32,7 @@ class _SoldRatingCountState extends State<SoldRatingCount> {
               color: Colors.yellow,
             ),
             Text(
-              " ${widget.state.model?.data?.ratingsAverage} (${widget.state.model?.data?.ratingsQuantity})",
+              " ${state.model?.data?.ratingsAverage} (${state.model?.data?.ratingsQuantity})",
               style: poppins18W500(),
             ),
           ],
@@ -44,43 +40,18 @@ class _SoldRatingCountState extends State<SoldRatingCount> {
         SizedBox(
           width: 20.w,
         ),
-        Container(
-          height: 47.h,
-          width: 144.w,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: AppColors.primary),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              InkWell(
-                onTap: () {
-                  if (count > 0) {
-                    --count;
-                    setState(() {});
-                  }
-                },
-                child: Icon(
-                  Icons.do_not_disturb_on_total_silence_sharp,
-                  color: AppColors.secondary,
-                ),
-              ),
-              Text(
-                "$count",
-                style: poppins18W500().copyWith(color: AppColors.secondary),
-              ),
-              InkWell(
-                  onTap: () {
-                    count++;
-                    setState(() {});
-                  },
-                  child: Icon(
-                    Icons.add_circle_outline_sharp,
-                    color: AppColors.secondary,
-                  ))
-            ],
-          ),
-        )
+        CustomCount(
+            add: () {
+              bloc.changeCount(true);
+            },
+            min: () {
+              bloc.changeCount(false);
+            },
+            count: "${state.count}",
+            state: state,
+            bloc: bloc,
+            h: 48.h,
+            w: 144.w)
       ],
     );
   }

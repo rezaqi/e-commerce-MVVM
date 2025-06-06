@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 class CustomSize extends StatelessWidget {
   final String count;
   final Color? color;
-  const CustomSize({super.key, required this.count, required this.color});
+  final Color? bgColor;
+
+  const CustomSize(
+      {super.key, required this.count, required this.color, this.bgColor});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +15,7 @@ class CustomSize extends StatelessWidget {
       padding: EdgeInsets.all(5),
       margin: EdgeInsets.only(left: 5),
       decoration: BoxDecoration(
+          color: bgColor,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(width: 1)),
       child: Text(

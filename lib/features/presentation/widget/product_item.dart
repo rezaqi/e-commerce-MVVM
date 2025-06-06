@@ -1,24 +1,25 @@
 import 'package:e_commerce/config/routs/routs.dart';
 import 'package:e_commerce/features/data/model/products_model.dart';
+import 'package:e_commerce/features/presentation/manager/fav/bloc_fav.dart';
+import 'package:e_commerce/features/presentation/manager/fav/event_fav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductItem extends StatelessWidget {
+  final BlocFav blocFav;
+
   //ProductDataEntity
+
   Data model;
 
-  ProductItem(this.model, {super.key});
+  ProductItem(this.model, {required this.blocFav, super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print("0000000000000000000000000000000000000000000000000000");
-        print(model.id);
         if (model.id != null) {
-          // print("""""" """""" """""" """object""" """""" """""" """""");
-          // print(model.id);
           Navigator.pushNamed(context, Routes.item, arguments: model.id);
         }
       },
@@ -136,8 +137,7 @@ class ProductItem extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: InkWell(
                   onTap: () {
-                    // fav = !fav;
-                    // setState(() {});
+                    blocFav.add(OnEventAddFav(itemId: "${model.id}"));
                   },
                   child: CircleAvatar(
                     radius: 15.r,

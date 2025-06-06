@@ -1,5 +1,6 @@
 import 'package:e_commerce/core/class/states/request_state.dart';
 import 'package:e_commerce/di.dart';
+import 'package:e_commerce/features/presentation/manager/fav/bloc_fav.dart';
 import 'package:e_commerce/features/presentation/manager/products/bloc.dart';
 import 'package:e_commerce/features/presentation/manager/products/event.dart';
 import 'package:e_commerce/features/presentation/manager/products/state.dart';
@@ -14,11 +15,19 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<BlocProducts>(
-      create: (_) => getIt<BlocProducts>()..add(OnProducts(id: id)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<BlocProducts>(
+          create: (_) => getIt<BlocProducts>()..add(OnProducts(id: id)),
+        ),
+        BlocProvider<BlocFav>(
+          create: (_) => getIt<BlocFav>(),
+        )
+      ],
       child: BlocConsumer<BlocProducts, StateProducts>(
           listener: (_, state) {},
           builder: (context, state) {
+            var blocFav = BlocFav.get(context);
             return state.requestState == RequestState.loading
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -39,8 +48,9 @@ class Products extends StatelessWidget {
                                         crossAxisSpacing: 16.w,
                                         mainAxisSpacing: 16.h),
                                 itemCount: 10,
-                                itemBuilder: (context, index) =>
-                                    ProductItem(state.model!.data![index])),
+                                itemBuilder: (context, index) => ProductItem(
+                                    blocFav: blocFav,
+                                    state.model!.data![index])),
                           )
                         : SizedBox();
           }),

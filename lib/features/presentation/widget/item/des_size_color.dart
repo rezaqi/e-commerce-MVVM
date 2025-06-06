@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/class/uitls/color/app_colors.dart';
 import 'package:e_commerce/core/class/uitls/text_styles.dart';
 import 'package:e_commerce/features/presentation/manager/item/state.dart';
 import 'package:e_commerce/features/presentation/widget/item/custom_color.dart';
@@ -5,10 +6,25 @@ import 'package:e_commerce/features/presentation/widget/item/custom_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DesSizeColor extends StatelessWidget {
+class DesSizeColor extends StatefulWidget {
   final StateItem state;
   const DesSizeColor({super.key, required this.state});
 
+  @override
+  State<DesSizeColor> createState() => _DesSizeColorState();
+}
+
+int iSize = 37;
+int selectedSize = -1;
+int selectedColor = -1;
+List<Color> color = [
+  Colors.brown,
+  Colors.cyanAccent,
+  Colors.indigo,
+  Colors.lime
+];
+
+class _DesSizeColorState extends State<DesSizeColor> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -24,7 +40,7 @@ class DesSizeColor extends StatelessWidget {
               "Description",
               style: poppins20W600(),
             ),
-            Text("${state.model?.data?.description}"),
+            Text("${widget.state.model?.data?.description}"),
             SizedBox(
               height: 20.h,
             ),
@@ -33,9 +49,23 @@ class DesSizeColor extends StatelessWidget {
               style: poppins20W600(),
             ),
             Row(
+              spacing: 10.w,
               children: [
                 ...List.generate(5, (index) {
-                  return CustomSize(color: Colors.black, count: "38");
+                  return InkWell(
+                    onTap: () {
+                      selectedSize = index;
+                      setState(() {});
+                    },
+                    child: CustomSize(
+                        bgColor: selectedSize == index
+                            ? AppColors.primary
+                            : Colors.transparent,
+                        color: selectedSize == index
+                            ? AppColors.secondary
+                            : Colors.black,
+                        count: "$iSize"),
+                  );
                 })
               ],
             ),
@@ -47,22 +77,20 @@ class DesSizeColor extends StatelessWidget {
               style: poppins20W600(),
             ),
             Row(
+              spacing: 10.w,
               children: [
-                CustomColor(
-                  color: Colors.red,
-                ),
-                CustomColor(
-                  color: Colors.blueAccent,
-                ),
-                CustomColor(
-                  color: Colors.amberAccent,
-                ),
-                CustomColor(
-                  color: Colors.lightBlue,
-                ),
-                CustomColor(
-                  color: Colors.purpleAccent,
-                )
+                ...List.generate(4, (index) {
+                  return InkWell(
+                    onTap: () {
+                      selectedColor = index;
+                      setState(() {});
+                    },
+                    child: CustomColor(
+                      isSelected: selectedColor == index,
+                      color: color[index],
+                    ),
+                  );
+                })
               ],
             )
           ],

@@ -22,4 +22,14 @@ class AppLinks {
   static String item(String id) {
     return "$link/products/$id";
   }
+
+//   cart
+  static String addTOCart = "$link/cart";
+  static String getCart = "$link/cart";
+  static String updatecart(String id) {
+    return "$link/cart/$id";
+  }
+
+  // fav
+  static String fav = "$link/wishlist";
 }

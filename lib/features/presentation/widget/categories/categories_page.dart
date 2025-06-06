@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:e_commerce/core/class/states/request_state.dart';
 import 'package:e_commerce/core/class/uitls/color/app_colors.dart';
+import 'package:e_commerce/core/class/uitls/images/app_images.dart';
 import 'package:e_commerce/core/class/uitls/text_styles.dart';
 import 'package:e_commerce/di.dart';
 import 'package:e_commerce/features/presentation/manager/categories/bloc_subcat.dart';
@@ -36,9 +39,15 @@ class _CategoriesPageState extends State<CategoriesPage> {
     super.dispose();
   }
 
+  Random random = Random();
+  List<double> nums = [20, 10, 15];
+
+  int randomIndex = 0;
+
+  double indexSize = 0.0;
+
   @override
   Widget build(BuildContext context) {
-    String id = "";
     return BlocProvider.value(
       value: subCatBloc,
       child: BlocConsumer<SubCatBloc, StateSubCat>(
@@ -91,27 +100,51 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                                       (context, index) =>
                                                           InkWell(
                                                     onTap: () {
+                                                      randomIndex =
+                                                          random.nextInt(nums
+                                                              .length); // رقم عشوائي من 0 إلى طول القائمة - 1
+                                                      indexSize =
+                                                          nums[randomIndex];
                                                       String selectedId =
                                                           "${bloc.state.modelItem?.data?[index].category}";
                                                       widget.ontap(selectedId);
                                                       // لا تستخدم Navigator.pop لأنك لا تريد الرجوع
                                                     },
-                                                    child: Container(
+                                                    child: Stack(
                                                         alignment:
                                                             Alignment.center,
-                                                        decoration: BoxDecoration(
-                                                            color:
-                                                                AppColors.type,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15)),
-                                                        child: Text(
-                                                            textAlign: TextAlign
+                                                        children: [
+                                                          Image.asset(
+                                                            AppImages.slider1,
+                                                            fit: BoxFit.cover,
+                                                            height:
+                                                                double.infinity,
+                                                          ),
+                                                          Container(
+                                                            alignment: Alignment
                                                                 .center,
-                                                            "${state.modelItem?.data?[index].name}",
-                                                            style:
-                                                                poppins14W400())),
+                                                            decoration: BoxDecoration(
+                                                                color: const Color
+                                                                    .fromARGB(
+                                                                    92,
+                                                                    0,
+                                                                    0,
+                                                                    0),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15)),
+                                                          ),
+                                                          Text(
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              "${state.modelItem?.data?[index].name}",
+                                                              style: poppins14W400()
+                                                                  .copyWith(
+                                                                      color: AppColors
+                                                                          .secondary))
+                                                        ]),
                                                   ),
                                                   padding: const EdgeInsets.all(
                                                       16), // مسافة خارجية حول الشبكة

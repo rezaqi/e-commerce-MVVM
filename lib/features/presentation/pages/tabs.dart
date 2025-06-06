@@ -1,5 +1,5 @@
+import 'package:e_commerce/core/class/appbar/appbar.dart';
 import 'package:e_commerce/core/class/uitls/color/app_colors.dart';
-import 'package:e_commerce/core/class/uitls/text_styles.dart';
 import 'package:e_commerce/features/presentation/manager/search/bloc_search.dart';
 import 'package:e_commerce/features/presentation/manager/tabs/state_tab.dart';
 import 'package:e_commerce/features/presentation/manager/tabs/tab_bloc.dart';
@@ -27,34 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
       child: BlocBuilder<TabBloc, TabsState>(builder: (context, state) {
         var bloc = TabBloc.get(context);
         return Scaffold(
-          appBar: AppBar(
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Badge(
-                  alignment: Alignment.topCenter,
-                  label: Text(""
-                      // HomeCubit.get(context).numOfItemsInCart.toString()
-                      ),
-                  child: IconButton(
-                      onPressed: () {
-                        //      Navigator.pushNamed(context, Routes.cart);
-                      },
-                      icon: Icon(
-                        Icons.shopping_cart,
-                        size: 30,
-                        color: AppColors.primary,
-                      )),
-                ),
-              )
-            ],
-            title: Text(
-              "Home",
-              style: poppins20W600(),
-            ),
-            backgroundColor: Colors.white,
-            elevation: 0,
-          ),
+          appBar: appBar(
+              context: context,
+              title: bloc.title,
+              isBack: false,
+              isCar: bloc.title == "Home" ? true : false),
 
           // body
           body: bloc.tabs[state.indexScreen],

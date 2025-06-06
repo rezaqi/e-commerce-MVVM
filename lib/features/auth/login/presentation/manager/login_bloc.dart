@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/class/cache/cache_helper.dart';
 import 'package:e_commerce/core/class/failure/failure_remote.dart';
 import 'package:e_commerce/core/class/states/request_state.dart';
 import 'package:e_commerce/features/auth/login/doman/usecase/login_use_case.dart';
@@ -16,6 +17,9 @@ class BlocLogin extends Bloc<EventLogin, StateLogin> {
         res.fold((error) {
           emit(state.copyWith(state: RequestState.error, error: error));
         }, (data) {
+          CacheHelper.saveLogin(data.user!.name ?? "", data.user!.email ?? "");
+          CacheHelper.saveToken(data.token ?? "");
+          CacheHelper.saveStepPage("2");
           emit(state.copyWith(state: RequestState.success, modelLogin: data));
         });
       } catch (e) {

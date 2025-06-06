@@ -3,7 +3,7 @@ class TabsState {
 
   const TabsState({required this.indexScreen});
 
-  TabsState copyWith({int? indexScreen}) {
+  TabsState copyWith({int? indexScreen, String? title}) {
     return TabsState(
       indexScreen: indexScreen ?? this.indexScreen,
     );
@@ -11,5 +11,7 @@ class TabsState {
 }
 
 class TabInitState extends TabsState {
-  TabInitState({int indexScreen = 0}) : super(indexScreen: indexScreen);
+  TabInitState({
+    int indexScreen = 0,
+  }) : super(indexScreen: indexScreen);
 }

@@ -1,14 +1,16 @@
 import 'package:e_commerce/config/routs/routs.dart';
+import 'package:e_commerce/core/class/cache/cache_helper.dart';
 import 'package:e_commerce/core/class/uitls/color/app_colors.dart';
 import 'package:e_commerce/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
-  String route = Routes.home;
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  runApp(MyApp(rout: route));
+  await CacheHelper.init();
+  String? route = CacheHelper.stepPage();
+  runApp(MyApp(rout: route!));
 }
 
 class MyApp extends StatelessWidget {

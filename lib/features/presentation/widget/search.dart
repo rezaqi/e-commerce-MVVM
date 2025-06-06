@@ -1,3 +1,4 @@
+import 'package:e_commerce/config/routs/routs.dart';
 import 'package:e_commerce/core/class/uitls/color/app_colors.dart';
 import 'package:e_commerce/core/class/uitls/images/app_images.dart';
 import 'package:e_commerce/core/class/uitls/text_styles.dart';
@@ -65,7 +66,9 @@ class Search extends StatelessWidget {
                   width: 24.w,
                 ),
                 GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.cart);
+                    },
                     child: Image.asset(
                       AppImages.cart,
                       width: 24.w,

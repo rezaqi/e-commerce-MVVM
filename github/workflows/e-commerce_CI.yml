@@ -1,0 +1,36 @@
+name : e-commerce CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    brunches: [main]
+
+
+jobs:
+  build:
+    runs-on: ubuntu_latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name : Set up e-commerce
+        uses: subosito/e-commerce-actions@v2
+        with:
+          flutter-version: '3.29.3' 
+
+
+      - name: install dependencies
+        run: flutter pub get
+
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name:  upload APK as artifact 
+        uses:  actions/upload-artifact@v4
+        weight:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+

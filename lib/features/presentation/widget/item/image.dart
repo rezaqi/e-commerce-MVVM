@@ -1,11 +1,15 @@
 import 'package:e_commerce/core/class/uitls/color/app_colors.dart';
+import 'package:e_commerce/features/presentation/manager/fav/bloc_fav.dart';
 import 'package:e_commerce/features/presentation/manager/item/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ImageStackItem extends StatefulWidget {
   final StateItem state;
-  const ImageStackItem({super.key, required this.state});
+  final BlocFav bloc;
+  final void Function()? onFav;
+  const ImageStackItem(
+      {super.key, required this.state, required this.bloc, this.onFav});
 
   @override
   State<ImageStackItem> createState() => _ImageStackItemState();
@@ -35,7 +39,7 @@ class _ImageStackItemState extends State<ImageStackItem> {
       alignment: Alignment.bottomCenter,
       children: [
         SizedBox(
-          height: 300.h,
+          height: 250.h,
           child: PageView.builder(
             controller: _pageController,
             itemCount: widget.state.model?.data?.images?.length ?? 0,
@@ -57,7 +61,11 @@ class _ImageStackItemState extends State<ImageStackItem> {
             },
           ),
         ),
-        Positioned(right: 10.w, top: 10.h, child: Icon(Icons.favorite_border)),
+        Positioned(
+            right: 10.w,
+            top: 10.h,
+            child: InkWell(
+                onTap: widget.onFav, child: Icon(Icons.favorite_border))),
         Positioned(
             bottom: 10.h,
             child: Row(
