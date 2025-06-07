@@ -24,8 +24,10 @@ import 'features/data/data_source/cart/get/get_cart_DS_impl.dart' as _i693;
 import 'features/data/data_source/cart/update/cart_update_DS.dart' as _i370;
 import 'features/data/data_source/cart/update/cart_update_DS_impl.dart' as _i44;
 import 'features/data/data_source/data_source_DS.dart' as _i957;
-import 'features/data/data_source/fav/add_DS.dart' as _i365;
-import 'features/data/data_source/fav/add_DS_impl.dart' as _i316;
+import 'features/data/data_source/fav/add/add_DS.dart' as _i418;
+import 'features/data/data_source/fav/add/add_DS_impl.dart' as _i895;
+import 'features/data/data_source/fav/get/get_DS.dart' as _i949;
+import 'features/data/data_source/fav/get/get_DS_impl.dart' as _i561;
 import 'features/data/data_source/item_details/DS_item_impl.dart' as _i971;
 import 'features/data/data_source/item_details/data_source.dart' as _i106;
 import 'features/data/data_source/products/data_source_products.dart' as _i59;
@@ -40,6 +42,7 @@ import 'features/data/repository/cart/delete_cart_repo_impl.dart' as _i350;
 import 'features/data/repository/cart/get_cart_repo_impl.dart' as _i107;
 import 'features/data/repository/cart/update_repo_impl.dart' as _i439;
 import 'features/data/repository/fav/add_repo_impl.dart' as _i94;
+import 'features/data/repository/fav/get_repo_impl.dart' as _i495;
 import 'features/data/repository/item_repo_remote_impl.dart' as _i959;
 import 'features/data/repository/products_repo_impl.dart' as _i253;
 import 'features/data/repository/repo_remote_impl.dart' as _i1001;
@@ -49,6 +52,7 @@ import 'features/doman/repository/cart/delete_repo.dart' as _i1015;
 import 'features/doman/repository/cart/get_repo.dart' as _i182;
 import 'features/doman/repository/cart/update_repo.dart' as _i857;
 import 'features/doman/repository/fav/add_repo.dart' as _i715;
+import 'features/doman/repository/fav/get_repo.dart' as _i159;
 import 'features/doman/repository/item_repo.dart' as _i392;
 import 'features/doman/repository/products_repo.dart' as _i922;
 import 'features/doman/repository/repo_cat.dart' as _i336;
@@ -59,6 +63,7 @@ import 'features/doman/usecase/cart/get_cart_usecase.dart' as _i966;
 import 'features/doman/usecase/cart/update_usecae.dart' as _i956;
 import 'features/doman/usecase/cat_usecase.dart' as _i534;
 import 'features/doman/usecase/fav/add_usecase.dart' as _i436;
+import 'features/doman/usecase/fav/get_usecase.dart' as _i621;
 import 'features/doman/usecase/item_usecase.dart' as _i370;
 import 'features/doman/usecase/products_usecase.dart' as _i689;
 import 'features/doman/usecase/subcat_usecase.dart' as _i679;
@@ -82,14 +87,18 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i936.TabBloc>(() => _i936.TabBloc());
     gh.singleton<_i530.ApiManager>(() => _i530.ApiManager());
-    gh.factory<_i365.AddFavDS>(
-        () => _i316.AddFavDSImpl(api: gh<_i530.ApiManager>()));
     gh.factory<_i106.ItemDS>(
         () => _i971.ItemDSImpl(api: gh<_i530.ApiManager>()));
+    gh.factory<_i418.AddFavDS>(
+        () => _i895.AddFavDSImpl(api: gh<_i530.ApiManager>()));
+    gh.factory<_i949.GetFavDS>(
+        () => _i561.GetFavDSImpl(api: gh<_i530.ApiManager>()));
     gh.factory<_i59.DataSourceProducts>(
         () => _i317.DateSourceRemoteProductsImpl(api: gh<_i530.ApiManager>()));
     gh.factory<_i179.DeleteCartDS>(
         () => _i751.DeleteCartDSImpl(api: gh<_i530.ApiManager>()));
+    gh.factory<_i715.AddFavRepo>(
+        () => _i94.AddFavRepoImpl(ds: gh<_i418.AddFavDS>()));
     gh.lazySingleton<_i922.RepoProducts>(() =>
         _i253.RepoProductsImpl(dataSource: gh<_i59.DataSourceProducts>()));
     gh.factory<_i392.RepoItem>(
@@ -109,12 +118,12 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i370.CartUpdateDs>(
         () => _i44.CartUpdateDSImpl(apiManager: gh<_i530.ApiManager>()));
-    gh.factory<_i715.AddFavRepo>(
-        () => _i94.AddFavRepoImpl(ds: gh<_i365.AddFavDS>()));
     gh.factory<_i502.SubCategoriesDS>(
         () => _i218.SubCategories(apiManager: gh<_i530.ApiManager>()));
     gh.factory<_i1032.UseCaseDeleteCart>(
         () => _i1032.UseCaseDeleteCart(repo: gh<_i1015.CartDeleteRepo>()));
+    gh.factory<_i159.GetFavRepo>(
+        () => _i495.GetFavRepoImpl(ds: gh<_i949.GetFavDS>()));
     gh.factory<_i182.GetCartRepo>(
         () => _i107.GetCartRepoImpl(dataSource: gh<_i955.GetCartDs>()));
     gh.factory<_i857.RepoCartUpdate>(
@@ -139,6 +148,12 @@ extension GetItInjectableX on _i174.GetIt {
           usecase: gh<_i370.UseCaseItem>(),
           useCaseAddToCart: gh<_i881.UseCaseAddToCart>(),
         ));
+    gh.factory<_i621.GetFavUseCase>(
+        () => _i621.GetFavUseCase(repo: gh<_i159.GetFavRepo>()));
+    gh.factory<_i947.BlocFav>(() => _i947.BlocFav(
+          usecaseGet: gh<_i621.GetFavUseCase>(),
+          usecaseAdd: gh<_i436.AddFavUseCase>(),
+        ));
     gh.factory<_i534.HomUseCase>(
         () => _i534.HomUseCase(homeRepo: gh<_i336.HomeRepo>()));
     gh.factory<_i339.BlocProducts>(
@@ -147,8 +162,6 @@ extension GetItInjectableX on _i174.GetIt {
         _i679.SubcatUsecase(subCategoriesRepo: gh<_i706.SubCategoriesRepo>()));
     gh.factory<_i956.UseCaseUpdateCart>(
         () => _i956.UseCaseUpdateCart(repo: gh<_i857.RepoCartUpdate>()));
-    gh.factory<_i947.BlocFav>(
-        () => _i947.BlocFav(usecaseAdd: gh<_i436.AddFavUseCase>()));
     gh.factory<_i582.HomeBloc>(
         () => _i582.HomeBloc(homeUseCase: gh<_i534.HomUseCase>()));
     gh.factory<_i193.SubCatBloc>(() => _i193.SubCatBloc(

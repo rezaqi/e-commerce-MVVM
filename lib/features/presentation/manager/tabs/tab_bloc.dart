@@ -40,7 +40,7 @@ class TabBloc extends Bloc<TabsEvent, TabsState> {
   List tabs = [
     HomeTab(),
     CategoryTab(),
-    FavTab(),
+    Favorite(),
     Account(),
   ];
 }

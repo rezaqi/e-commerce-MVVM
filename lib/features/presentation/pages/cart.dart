@@ -6,7 +6,7 @@ import 'package:e_commerce/di.dart';
 import 'package:e_commerce/features/presentation/manager/cart/cart_bloc.dart';
 import 'package:e_commerce/features/presentation/manager/cart/cart_event.dart';
 import 'package:e_commerce/features/presentation/manager/cart/cart_state.dart';
-import 'package:e_commerce/features/presentation/widget/cart/custom_cart.dart';
+import 'package:e_commerce/features/presentation/widget/cart/cart_widget.dart';
 import 'package:e_commerce/features/presentation/widget/states/error.dart';
 import 'package:e_commerce/features/presentation/widget/states/loading.dart';
 import 'package:flutter/material.dart';
@@ -43,11 +43,8 @@ class Cart extends StatelessWidget {
                           children: [
                             ...List.generate(
                                 state.model!.data!.products!.length,
-                                (i) => CustomCart(
-                                      bloc: bloc,
-                                      state: state,
-                                      i: i,
-                                    ))
+                                (i) =>
+                                    CartWidget(state: state, i: i, bloc: bloc))
                           ],
                         ),
                       ),

@@ -1,18 +1,29 @@
 import 'package:e_commerce/core/class/uitls/color/app_colors.dart';
 import 'package:e_commerce/core/class/uitls/text_styles.dart';
-import 'package:e_commerce/features/presentation/manager/cart/cart_bloc.dart';
-import 'package:e_commerce/features/presentation/manager/cart/cart_event.dart';
-import 'package:e_commerce/features/presentation/manager/cart/cart_state.dart';
-import 'package:e_commerce/features/presentation/widget/item/cutom_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomCart extends StatelessWidget {
-  final StateCart state;
+class CustomCardItem extends StatelessWidget {
+  var state;
   final int i;
-  final BlocCart bloc;
-  const CustomCart(
-      {super.key, required this.state, required this.i, required this.bloc});
+  final String image;
+  final String title;
+  final String price;
+  final void Function()? onIconTop;
+  final IconData? iconTop;
+  var bloc;
+  final Widget widget;
+  CustomCardItem(
+      {super.key,
+      required this.image,
+      required this.state,
+      required this.i,
+      required this.bloc,
+      required this.widget,
+      required this.iconTop,
+      required this.onIconTop,
+      required this.title,
+      required this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +49,7 @@ class CustomCart extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  "${state.model!.data!.products![i].product!.imageCover}",
+                  image,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -52,14 +63,14 @@ class CustomCart extends StatelessWidget {
                 Expanded(
                   child: SizedBox(
                     child: Text(
-                      "${state.model!.data!.products![i].product!.title}",
+                      title,
                       style: poppins18W500(),
                     ),
                   ),
                 ),
                 Expanded(
                   child: Text(
-                    "EGP ${state.model!.data!.products![i].price}",
+                    "EGP $price",
                     style: poppins18W500(),
                   ),
                 ),
@@ -74,35 +85,8 @@ class CustomCart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                      onTap: () {
-                        bloc.add(OnEventDeleteCart(
-                          cartId:
-                              "${state.model!.data!.products![i].product!.id}",
-                        ));
-                      },
-                      child: Icon(Icons.delete_outline_rounded)),
-                  CustomCount(
-                    min: () {
-                      int count = state.model!.data!.products![i].count! - 1;
-                      bloc.add(OnEventUpdateCart(
-                          cartId:
-                              "${state.model!.data!.products![i].product!.id}",
-                          count: "$count"));
-                    },
-                    add: () {
-                      int count = state.model!.data!.products![i].count! + 1;
-                      bloc.add(OnEventUpdateCart(
-                          cartId:
-                              "${state.model!.data!.products![i].product!.id}",
-                          count: "$count"));
-                    },
-                    count: "${state.model!.data!.products![i].count}",
-                    h: 40.h,
-                    w: double.infinity,
-                    bloc: bloc,
-                    state: state,
-                  )
+                  InkWell(onTap: onIconTop, child: Icon(iconTop)),
+                  widget
                 ],
               ),
             ),

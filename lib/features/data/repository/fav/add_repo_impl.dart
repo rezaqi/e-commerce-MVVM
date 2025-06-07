@@ -1,4 +1,4 @@
-import 'package:e_commerce/features/data/data_source/fav/add_DS.dart';
+import 'package:e_commerce/features/data/data_source/fav/add/add_DS.dart';
 import 'package:e_commerce/features/doman/repository/fav/add_repo.dart';
 import 'package:injectable/injectable.dart';
 

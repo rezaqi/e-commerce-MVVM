@@ -7,6 +7,7 @@ import 'package:e_commerce/features/presentation/manager/home/state_cat.dart';
 import 'package:e_commerce/features/presentation/pages/tabs/category_tab.dart';
 import 'package:e_commerce/features/presentation/pages/tabs/fav.dart';
 import 'package:e_commerce/features/presentation/pages/tabs/home.dart';
+import 'package:e_commerce/features/presentation/pages/tabs/profile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -61,7 +62,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   List tabs = [
     HomeTab(),
     CategoryTab(),
-    FavTab(),
-    FavTab(),
+    Favorite(),
+    Account(),
   ];
 }
