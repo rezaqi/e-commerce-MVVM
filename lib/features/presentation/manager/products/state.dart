@@ -4,17 +4,23 @@ import 'package:e_commerce/features/data/model/products_model.dart';
 
 class StateProducts {
   RequestState? requestState;
+  RequestState? requestStatePage;
   Failure? failure;
   ProductsModel? model;
 
-  StateProducts({this.failure, this.model, this.requestState});
+  StateProducts(
+      {this.failure, this.model, this.requestState, this.requestStatePage});
 
   StateProducts copyWith(
-      {RequestState? requestState, Failure? failure, ProductsModel? model}) {
+      {RequestState? requestState,
+      RequestState? requestStatePage,
+      Failure? failure,
+      ProductsModel? model}) {
     return StateProducts(
         failure: failure ?? this.failure,
         model: model ?? this.model,
-        requestState: requestState ?? this.requestState);
+        requestState: requestState ?? this.requestState,
+        requestStatePage: requestStatePage ?? this.requestStatePage);
   }
 }
 

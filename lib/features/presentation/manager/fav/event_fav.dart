@@ -6,3 +6,8 @@ class OnEventAddFav extends EventFav {
 }
 
 class OnEventGetFav extends EventFav {}
+
+class OnEventRemoveFav extends EventFav {
+  String itemId;
+  OnEventRemoveFav({required this.itemId});
+}

@@ -65,7 +65,14 @@ class _ImageStackItemState extends State<ImageStackItem> {
             right: 10.w,
             top: 10.h,
             child: InkWell(
-                onTap: widget.onFav, child: Icon(Icons.favorite_border))),
+              onTap: widget.onFav,
+              child: widget.bloc.listFav.contains(widget.state.model!.data!.id)
+                  ? Icon(
+                      Icons.favorite_rounded,
+                      color: AppColors.primary,
+                    )
+                  : Icon(Icons.favorite_border),
+            )),
         Positioned(
             bottom: 10.h,
             child: Row(

@@ -6,3 +6,7 @@ abstract class EventProducts {
 class OnProducts extends EventProducts {
   OnProducts({required super.id});
 }
+
+class OnClickFav extends EventProducts {
+  OnClickFav({required super.id});
+}

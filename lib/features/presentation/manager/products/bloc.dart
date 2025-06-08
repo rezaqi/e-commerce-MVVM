@@ -9,6 +9,9 @@ import 'package:injectable/injectable.dart';
 @injectable
 class BlocProducts extends Bloc<EventProducts, StateProducts> {
   UseCaseProducts useCase;
+
+  static BlocProducts get(context) => BlocProvider.of(context);
+
   BlocProducts({required this.useCase}) : super(StateInitProducts()) {
     on<OnProducts>((event, emit) async {
       try {
@@ -25,5 +28,17 @@ class BlocProducts extends Bloc<EventProducts, StateProducts> {
             requestState: RequestState.error, failure: Failure(e.toString())));
       }
     });
+    // on<loadingFav>((event, emit) {
+    //    emit(state.copyWith(requestStatePage: RequestState.loading));
+
+    // });
+  }
+
+  loadingFav() {
+    emit(state.copyWith(requestStatePage: RequestState.loading));
+  }
+
+  doneFav() {
+    emit(state.copyWith(requestStatePage: RequestState.success));
   }
 }

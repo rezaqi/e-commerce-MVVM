@@ -1,19 +1,34 @@
 import 'package:e_commerce/config/routs/routs.dart';
+import 'package:e_commerce/core/class/states/request_state.dart';
+import 'package:e_commerce/core/class/uitls/color/app_colors.dart';
 import 'package:e_commerce/features/data/model/products_model.dart';
 import 'package:e_commerce/features/presentation/manager/fav/bloc_fav.dart';
 import 'package:e_commerce/features/presentation/manager/fav/event_fav.dart';
+import 'package:e_commerce/features/presentation/manager/item/bloc.dart';
+import 'package:e_commerce/features/presentation/manager/item/event.dart';
+import 'package:e_commerce/features/presentation/manager/products/bloc.dart';
+import 'package:e_commerce/features/presentation/manager/products/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductItem extends StatelessWidget {
   final BlocFav blocFav;
+  BlocProducts? blocProducts;
+  StateProducts? stateProducts;
+  BlocItem? blocAddToCart;
 
   //ProductDataEntity
 
   Data model;
 
-  ProductItem(this.model, {required this.blocFav, super.key});
+  ProductItem(this.model,
+      {required this.blocFav,
+      this.blocAddToCart,
+      this.stateProducts,
+      this.blocProducts,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +75,7 @@ class ProductItem extends StatelessWidget {
                             color: const Color(0xff06004F)),
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 6.h,
                         child: Text(
                           model.description ?? "",
                           maxLines: 1,
@@ -71,9 +86,9 @@ class ProductItem extends StatelessWidget {
                               color: const Color(0xff06004F)),
                         ),
                       ),
-                      SizedBox(
-                        height: 8.h,
-                      ),
+                      // SizedBox(
+                      //   height: 8.h,
+                      // ),
                       SizedBox(
                         height: 15.h,
                         child: Row(
@@ -136,17 +151,41 @@ class ProductItem extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topRight,
                 child: InkWell(
-                  onTap: () {
-                    blocFav.add(OnEventAddFav(itemId: "${model.id}"));
+                  onTap: () async {
+                    blocProducts?.loadingFav();
+
+                    if (blocFav.listFav.contains(model.id)) {
+                      blocFav.add(OnEventRemoveFav(itemId: "${model.id}"));
+
+                      Fluttertoast.showToast(
+                          msg: "item removed form your favorites",
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                    } else {
+                      blocFav.add(OnEventAddFav(itemId: "${model.id}"));
+
+                      Fluttertoast.showToast(
+                          msg: "item added to your favorites",
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: AppColors.primary,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                    }
                   },
                   child: CircleAvatar(
                     radius: 15.r,
                     backgroundColor: Colors.white,
                     child: Center(
-                      child: Icon(Icons.favorite_border),
-                      // child: fav
-                      //     ? Image.asset('assets/images/Vectorhart_full.png')
-                      //     : Image.asset('assets/images/heart.png'),
+                      child: blocFav.listFav.contains(model.id)
+                          ? Icon(
+                              Icons.favorite_rounded,
+                              color: AppColors.primary,
+                            )
+                          : Icon(Icons.favorite_border),
                     ),
                   ),
                 ),
@@ -158,7 +197,18 @@ class ProductItem extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: InkWell(
                   onTap: () {
-                    //  HomeCubit.get(context).addTCart(model.id ?? "");
+                    blocAddToCart!.add(OnItemAdd(productId: model.id ?? ''));
+
+                    if (blocAddToCart!.state.requestStateCart ==
+                        RequestState.success) {
+                      Fluttertoast.showToast(
+                          msg: "Update cart success",
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: AppColors.primary,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                    }
                   },
                   child: CircleAvatar(
                     radius: 15.r,

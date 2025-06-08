@@ -14,6 +14,7 @@ class AddToCartDsImpl implements AddToCartDs {
   @override
   Future<ModelDetailsAddToCart> addToCart(String productId) async {
     try {
+      print("- $productId");
       var res = await api!.postData(
           url: AppLinks.addTOCart,
           body: {"productId": productId},

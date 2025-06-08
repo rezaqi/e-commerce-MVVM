@@ -36,8 +36,11 @@ class Cart extends StatelessWidget {
                 if (state.requestState == RequestState.success) {
                   var bloc = BlocCart.get(context);
                   return Stack(
-                    alignment: Alignment.bottomCenter,
+                    alignment: Alignment.topCenter,
                     children: [
+                      SizedBox(
+                        height: double.infinity,
+                      ),
                       SingleChildScrollView(
                         child: Column(
                           children: [
@@ -48,55 +51,59 @@ class Cart extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: SizedBox(
-                          height: 100.h,
-                          // width: 100.w,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color:
-                                            const Color.fromARGB(216, 0, 0, 0),
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Text(
-                                      "Total Price\n EGP ${state.model!.data!.totalCartPrice}",
-                                      style: poppins18W500()
-                                          .copyWith(color: AppColors.secondary),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                height: 60.h,
-                                width: 250.w,
-                                decoration: BoxDecoration(
-                                    color: AppColors.primary,
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                      Positioned(
+                        bottom: 10.h,
+                        right: 10.w,
+                        left: 10.w,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: SizedBox(
+                            height: 100.h,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
                                   children: [
-                                    Text(
-                                      "Check Out",
-                                      style: poppins18W500().copyWith(
-                                        color: AppColors.secondary,
+                                    Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              216, 0, 0, 0),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Text(
+                                        "Total Price\n EGP ${state.model!.data!.totalCartPrice}",
+                                        style: poppins18W500().copyWith(
+                                            color: AppColors.secondary),
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.arrow_forward_ios_sharp,
-                                      color: AppColors.secondary,
-                                    )
                                   ],
                                 ),
-                              ),
-                            ],
+                                Container(
+                                  height: 60.h,
+                                  width: 250.w,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.primary,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        "Check Out",
+                                        style: poppins18W500().copyWith(
+                                          color: AppColors.secondary,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios_sharp,
+                                        color: AppColors.secondary,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

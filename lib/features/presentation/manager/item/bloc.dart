@@ -34,8 +34,9 @@ class BlocItem extends Bloc<EventItem, StateItem> {
 
     on<OnItemAdd>((event, emit) async {
       try {
+        print("-------66---------");
         emit(state.copyWith(requestStateCart: RequestState.loading));
-        var res = await useCaseAddToCart.call("${state.model?.data?.id}");
+        var res = await useCaseAddToCart.call(event.productId);
         return res.fold((error) {
           emit(state.copyWith(
               requestStateCart: RequestState.error, failureCart: error));
@@ -66,5 +67,13 @@ class BlocItem extends Bloc<EventItem, StateItem> {
 
   num totalPrice(num price) {
     return state.count * price;
+  }
+
+  loadingFav() {
+    emit(state.copyWith(requestStatePage: RequestState.loading));
+  }
+
+  doneFav() {
+    emit(state.copyWith(requestStatePage: RequestState.success));
   }
 }

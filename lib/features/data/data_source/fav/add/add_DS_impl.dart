@@ -11,6 +11,8 @@ class AddFavDSImpl implements AddFavDS {
   @override
   Future<bool> addFave(String itemId) async {
     try {
+      print("-------------------------------");
+      print(itemId);
       var res = await api.postData(
           url: AppLinks.fav,
           body: {'productId': itemId},

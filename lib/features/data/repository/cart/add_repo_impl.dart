@@ -13,6 +13,7 @@ class RepoAddToCartImpl implements RepoAddToCart {
   Future<Either<Failure, ModelDetailsAddToCart>> addToCart(
       String productId) async {
     try {
+      print("-----------$productId");
       var res = await addToCartDs.addToCart(productId);
       return Right(res);
     } catch (e) {

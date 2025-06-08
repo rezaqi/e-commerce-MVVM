@@ -1,3 +1,4 @@
+import 'package:e_commerce/config/routs/routs.dart';
 import 'package:e_commerce/core/class/states/request_state.dart';
 import 'package:e_commerce/core/class/uitls/text_styles.dart';
 import 'package:e_commerce/di.dart';
@@ -81,17 +82,23 @@ class HomeTab extends StatelessWidget {
                                         (BuildContext context, int index) {
                                       return Column(
                                         children: [
-                                          SizedBox(
-                                            width: 100.w,
-                                            height: 100.h,
-                                            child: CircleAvatar(
-                                                radius: 50.0,
-                                                backgroundImage: NetworkImage(
-                                                    state
-                                                            .categoryModel!
-                                                            .data?[index]
-                                                            .image ??
-                                                        '')),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                  context, Routes.products);
+                                            },
+                                            child: SizedBox(
+                                              width: 100.w,
+                                              height: 100.h,
+                                              child: CircleAvatar(
+                                                  radius: 50.0,
+                                                  backgroundImage: NetworkImage(
+                                                      state
+                                                              .categoryModel!
+                                                              .data?[index]
+                                                              .image ??
+                                                          '')),
+                                            ),
                                           ),
                                           SizedBox(
                                             height: 8.h,
@@ -100,6 +107,7 @@ class HomeTab extends StatelessWidget {
                                             state.categoryModel!.data?[index]
                                                     .name ??
                                                 "",
+                                            overflow: TextOverflow.ellipsis,
                                             style: poppins14W400(),
                                           ),
                                         ],

@@ -6,16 +6,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomCardItem extends StatelessWidget {
   var state;
   final int i;
-  final String image;
+
   final String title;
   final String price;
   final void Function()? onIconTop;
   final IconData? iconTop;
   var bloc;
+  final Widget widgetImage;
   final Widget widget;
   CustomCardItem(
       {super.key,
-      required this.image,
       required this.state,
       required this.i,
       required this.bloc,
@@ -23,7 +23,8 @@ class CustomCardItem extends StatelessWidget {
       required this.iconTop,
       required this.onIconTop,
       required this.title,
-      required this.price});
+      required this.price,
+      required this.widgetImage});
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +48,7 @@ class CustomCardItem extends StatelessWidget {
                   )),
               width: 130.w,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  image,
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  borderRadius: BorderRadius.circular(10), child: widgetImage),
             ),
           ),
           Expanded(
@@ -61,6 +57,7 @@ class CustomCardItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
+                  flex: 2,
                   child: SizedBox(
                     child: Text(
                       title,
@@ -85,7 +82,12 @@ class CustomCardItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(onTap: onIconTop, child: Icon(iconTop)),
+                  InkWell(
+                      onTap: onIconTop,
+                      child: Icon(
+                        iconTop,
+                        color: Colors.redAccent,
+                      )),
                   widget
                 ],
               ),

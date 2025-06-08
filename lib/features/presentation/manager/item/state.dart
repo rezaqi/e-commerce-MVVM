@@ -6,6 +6,7 @@ import 'package:e_commerce/features/data/model/p_details_model.dart';
 class StateItem {
   RequestState? requestState;
   Failure? failure;
+  RequestState? requestStatePage;
   ModelProductDetails? model;
   int count = 1;
   ModelDetailsAddToCart? modelCart;
@@ -15,6 +16,7 @@ class StateItem {
   StateItem(
       {this.failure,
       this.model,
+      this.requestStatePage,
       this.requestState,
       this.count = 1,
       this.modelCart,
@@ -23,6 +25,7 @@ class StateItem {
 
   StateItem copyWith({
     RequestState? requestState,
+    RequestState? requestStatePage,
     Failure? failure,
     ModelProductDetails? model,
     int? count,
@@ -31,6 +34,7 @@ class StateItem {
     Failure? failureCart,
   }) {
     return StateItem(
+        requestStatePage: requestStatePage ?? this.requestStatePage,
         failure: failure ?? this.failure,
         model: model ?? this.model,
         count: count ?? this.count,

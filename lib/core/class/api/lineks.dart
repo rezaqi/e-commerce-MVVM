@@ -32,4 +32,13 @@ class AppLinks {
 
   // fav
   static String fav = "$link/wishlist";
+  static String favId(String id) {
+    return "$link/wishlist/$id";
+  }
+
+  // product image
+  static const String productImage =
+      "https://ecommerce.routemisr.com/Route-Academy-products";
+
+  static const String accountGet = "$link/addresses";
 }
