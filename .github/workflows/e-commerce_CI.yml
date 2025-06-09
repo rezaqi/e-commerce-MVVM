@@ -2,9 +2,9 @@ name : e-commerce CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    brunches: [main]
+    brunches: [master]
 
 
 jobs:
