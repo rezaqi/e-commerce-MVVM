@@ -56,6 +56,21 @@ This app is architected using a combination of **MVVM (Model-View-ViewModel)** a
 - Logic-UI decoupling with MVVM.
 - Easy feature scalability and maintainability.
 
+### 🛠️ CI/CD 
+This project uses GitHub Actions for Continuous Integration (CI) and Continuous Deployment (CD).
+Every push and pull request to the main branch automatically triggers the following steps:
+
+✅ Automated Tasks:
+Install dependencies (flutter pub get)
+
+Analyze code (flutter analyze)
+
+Run unit tests (flutter test)
+
+💡 Status Badge
+![Flutter CI](https://github.com/rezaqi/e-commerce-MVVM.git/actions/workflows/flutter_ci.yml/badge.svg)
+
+
 ---
 
 ## 🛠️ Technologies Used
